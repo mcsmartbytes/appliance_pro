@@ -194,9 +194,16 @@ export default function CartDrawer() {
             <p className="text-sm text-gray-500 text-center">
               Taxes and delivery calculated at checkout
             </p>
+            <Link
+              href="/checkout"
+              onClick={closeCart}
+              className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg transition-colors"
+            >
+              Proceed to Checkout
+            </Link>
             <a
               href="tel:+15551234567"
-              className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -206,14 +213,8 @@ export default function CartDrawer() {
                   d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                 />
               </svg>
-              Call to Complete Order
+              Or Call to Order
             </a>
-            <button
-              onClick={closeCart}
-              className="w-full text-center text-blue-700 hover:text-blue-800 font-medium py-2"
-            >
-              Continue Shopping
-            </button>
           </div>
         )}
       </div>

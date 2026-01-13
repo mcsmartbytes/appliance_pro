@@ -136,7 +136,17 @@ export default function InventoryDashboard() {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Inventory Management</h1>
+            <div className="flex items-center gap-6">
+              <h1 className="text-2xl font-bold text-gray-900">Inventory</h1>
+              <nav className="flex gap-4">
+                <a href="/admin/orders" className="text-gray-600 hover:text-gray-900">
+                  Orders
+                </a>
+                <a href="/admin/inventory" className="text-blue-700 font-medium">
+                  Inventory
+                </a>
+              </nav>
+            </div>
             <a
               href="/"
               className="text-blue-700 hover:text-blue-800 font-medium"
