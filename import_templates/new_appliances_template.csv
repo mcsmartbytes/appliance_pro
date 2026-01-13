@@ -1,0 +1,4 @@
+brand,model_number,title,category,price,msrp,quantity,description,is_floor_model,image_url
+Samsung,RF28R7351SR,Samsung 28 cu. ft. 4-Door French Door Refrigerator,Refrigerators,2499.00,2799.00,2,Stainless steel finish with FlexZone drawer,No,
+LG,WM4000HWA,LG 4.5 cu. ft. Front Load Washer,Washers,799.00,899.00,3,TurboWash technology with Steam,No,
+Whirlpool,WED5000DW,Whirlpool 7.0 cu. ft. Electric Dryer,Dryers,549.00,649.00,1,Wrinkle Shield option,Yes,

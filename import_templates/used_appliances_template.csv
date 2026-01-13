@@ -1,0 +1,5 @@
+title,brand,model_number,category,price,condition,cosmetic_grade,functional_test,warranty_days,serial_number,defects,repairs_made,description,image_url
+Samsung French Door Refrigerator - Excellent Condition,Samsung,RF28R7351SR,Refrigerators,1499.00,LIKE_NEW,A,PASSED,90,SN123456789,None,Replaced water filter,Works perfectly clean unit,
+LG Front Load Washer - Great Working Condition,LG,WM4000HWA,Washers,449.00,GOOD,B,PASSED,60,SN987654321,Small dent on side,None,Fully functional minor cosmetic wear,
+Whirlpool Electric Dryer,Whirlpool,WED5000DW,Dryers,299.00,GOOD,B,PASSED,30,SN456789123,Scratch on top,Replaced belt,Runs great,
+GE Profile Gas Range,GE,PGB911,Ranges,599.00,FAIR,C,PASSED,30,,Burner knob replaced,Cleaned and tested,Good working condition,

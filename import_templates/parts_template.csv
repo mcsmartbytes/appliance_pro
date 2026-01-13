@@ -1,0 +1,6 @@
+part_number,title,manufacturer,price,quantity,oem_type,compatible_models,description,image_url
+DA29-00020B,Samsung Refrigerator Water Filter,Samsung,34.99,25,OEM,"RF28R7351SR,RF28R7201SR,RF263BEAESR",Genuine Samsung water filter,
+279838,Whirlpool Dryer Heating Element,Whirlpool,42.99,12,OEM,"WED5000DW,WED4815EW,WED4850HW",Replacement heating element,
+MDS47123604,LG Washer Door Boot Seal,LG,89.99,8,OEM,"WM4000HWA,WM3900HWA,WM3700HWA",Door gasket seal,
+WD26X10013,GE Dishwasher Pump Motor,GE,124.99,5,OEM,"GDF630PSMSS,GDT665SSNSS",Drain pump motor assembly,
+WP3387134,Dryer Thermal Fuse (Universal),Whirlpool,8.99,50,AFTERMARKET,"Multiple Whirlpool Kenmore models",Thermal fuse safety device,

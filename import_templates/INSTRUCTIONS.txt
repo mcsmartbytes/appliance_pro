@@ -1,0 +1,85 @@
+APPLIANCE PRO - DATA IMPORT TEMPLATES
+======================================
+
+Please fill out the appropriate template(s) with your inventory data.
+You can open these CSV files in Excel, Google Sheets, or any spreadsheet program.
+
+IMPORTANT: Keep the header row (first row) exactly as-is.
+
+
+FILE 1: new_appliances_template.csv
+-----------------------------------
+Use this for NEW appliances you sell.
+
+Required fields:
+- brand: Manufacturer name (Samsung, LG, Whirlpool, GE, etc.)
+- model_number: The manufacturer's model number
+- title: Display name for the website
+- price: Your selling price
+
+Optional fields:
+- category: Refrigerators, Washers, Dryers, Dishwashers, Ranges, Microwaves, Freezers
+- msrp: Original retail price (shows "Save $X" if higher than your price)
+- quantity: Number in stock (default: 1)
+- description: Product details
+- is_floor_model: Yes or No
+- image_url: Web link to product image (or leave blank)
+
+
+FILE 2: used_appliances_template.csv
+------------------------------------
+Use this for USED/REFURBISHED appliances.
+
+Required fields:
+- title: Display name (e.g., "Samsung French Door Refrigerator - Excellent Condition")
+- price: Your selling price
+
+Recommended fields:
+- brand: Manufacturer name
+- model_number: If known
+- condition: NEW, LIKE_NEW, GOOD, FAIR, POOR, or FOR_PARTS
+- cosmetic_grade: A (excellent), B (good), C (fair), D (poor)
+- functional_test: PASSED, FAILED, PARTIAL, or NOT_TESTED
+- warranty_days: Number of days warranty (e.g., 30, 60, 90)
+
+Optional fields:
+- category: Refrigerators, Washers, Dryers, etc.
+- serial_number: Unit's serial number
+- defects: Any known issues
+- repairs_made: Work done on the unit
+- description: Additional details
+- image_url: Web link to photo (or leave blank)
+
+
+FILE 3: parts_template.csv
+--------------------------
+Use this for PARTS.
+
+Required fields:
+- part_number: The part number customers search for
+- title: Part name/description
+- price: Your selling price
+- quantity: Number in stock
+
+Recommended fields:
+- manufacturer: Who makes the part
+- oem_type: OEM (original), AFTERMARKET, or UNIVERSAL
+- compatible_models: Model numbers this part fits (comma-separated)
+
+Optional fields:
+- description: Additional details
+- image_url: Web link to part image
+
+
+TIPS:
+-----
+1. Save files as CSV (not Excel format) when done
+2. For compatible_models, separate multiple models with commas inside quotes:
+   "RF28R7351SR,RF28R7201SR,RF263BEAESR"
+3. Leave image_url blank if you don't have web links - we can add photos later
+4. Prices should be numbers only, no $ sign (e.g., 499.99 not $499.99)
+
+
+QUESTIONS?
+----------
+Contact us with any questions about filling out these templates.
