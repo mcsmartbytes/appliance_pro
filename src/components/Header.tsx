@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import SearchBar from './SearchBar';
+import CartIcon from './CartIcon';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
       {/* Top Bar */}
       <div className="bg-gray-900 text-white text-sm py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -64,7 +65,13 @@ export default function Header() {
             >
               Delivery
             </Link>
+            <CartIcon />
           </nav>
+
+          {/* Cart Icon - Mobile */}
+          <div className="md:hidden">
+            <CartIcon />
+          </div>
 
           {/* Mobile Menu Button */}
           <button
