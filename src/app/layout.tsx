@@ -12,18 +12,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AppliancePro | New & Used Appliances, Parts & Service",
+  title: "Benitz Appliance Shop | Sedalia's Trusted Used & New Appliances Since 1998",
   description:
-    "Your trusted source for quality new and used appliances, plus genuine parts. Professional delivery and service available.",
+    "Shop clean, tested used appliances, new appliances, and genuine parts at Benitz Appliance Shop in Sedalia, MO. Local delivery and warranty available.",
   keywords: [
-    "appliances",
-    "used appliances",
+    "Sedalia appliances",
+    "used appliances Sedalia MO",
+    "Benitz Appliance",
     "appliance parts",
     "refrigerator",
     "washer",
     "dryer",
-    "dishwasher",
+    "used refrigerator Sedalia",
+    "appliance delivery Missouri",
+    "Warrensburg appliances",
   ],
+  openGraph: {
+    title: "Benitz Appliance Shop",
+    description: "Sedalia's Trusted Used & New Appliance Shop Since 1998",
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function RootLayout({

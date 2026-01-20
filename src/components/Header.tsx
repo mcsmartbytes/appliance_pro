@@ -13,13 +13,17 @@ export default function Header() {
       {/* Top Bar */}
       <div className="bg-gray-900 text-white text-sm py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <p>Free delivery on orders over $500</p>
-          <div className="hidden sm:flex items-center gap-4">
-            <a href="tel:+15551234567" className="hover:text-gray-300 transition-colors">
+          <p className="hidden sm:block">Serving Sedalia &amp; Surrounding Areas Since 1998</p>
+          <p className="sm:hidden">Sedalia&apos;s Appliance Shop</p>
+          <div className="flex items-center gap-4">
+            <a href="tel:+15551234567" className="hover:text-[#D2691E] transition-colors flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
               (555) 123-4567
             </a>
-            <span>|</span>
-            <span>Mon-Sat: 9AM - 6PM</span>
+            <span className="hidden sm:inline text-gray-500">|</span>
+            <span className="hidden sm:inline">Mon-Sat: 9AM - 5PM</span>
           </div>
         </div>
       </div>
@@ -30,7 +34,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <span className="text-2xl font-bold text-gray-900">
-              Appliance<span className="text-blue-700">Pro</span>
+              Benitz<span className="text-[#D2691E]"> Appliance</span>
             </span>
           </Link>
 
@@ -41,29 +45,46 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/search?type=USED_UNIT"
-              className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
-            >
-              Used
-            </Link>
-            <Link
-              href="/search?type=PART"
-              className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
-            >
-              Parts
-            </Link>
-            <Link
-              href="/search?type=NEW_MODEL"
-              className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
-            >
-              New
-            </Link>
+            <div className="relative group">
+              <button className="text-gray-700 hover:text-[#D2691E] font-medium transition-colors flex items-center gap-1">
+                Shop
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {/* Dropdown */}
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                <Link
+                  href="/search?type=USED_UNIT"
+                  className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#D2691E] first:rounded-t-lg"
+                >
+                  Used Appliances
+                </Link>
+                <Link
+                  href="/search?type=NEW_MODEL"
+                  className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#D2691E]"
+                >
+                  New Appliances
+                </Link>
+                <Link
+                  href="/search?type=PART"
+                  className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#D2691E] last:rounded-b-lg"
+                >
+                  Parts
+                </Link>
+              </div>
+            </div>
             <Link
               href="/delivery"
-              className="text-gray-700 hover:text-blue-700 font-medium transition-colors"
+              className="text-gray-700 hover:text-[#D2691E] font-medium transition-colors"
             >
-              Delivery
+              Services
+            </Link>
+            <Link
+              href="#contact"
+              className="text-gray-700 hover:text-[#D2691E] font-medium transition-colors"
+            >
+              Contact
             </Link>
             <CartIcon />
           </nav>
@@ -109,33 +130,42 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <nav className="px-4 py-3 space-y-2">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider pt-2">Shop</p>
             <Link
               href="/search?type=USED_UNIT"
-              className="block py-2 text-gray-700 hover:text-blue-700 font-medium"
+              className="block py-2 text-gray-700 hover:text-[#D2691E] font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               Used Appliances
             </Link>
             <Link
-              href="/search?type=PART"
-              className="block py-2 text-gray-700 hover:text-blue-700 font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Parts
-            </Link>
-            <Link
               href="/search?type=NEW_MODEL"
-              className="block py-2 text-gray-700 hover:text-blue-700 font-medium"
+              className="block py-2 text-gray-700 hover:text-[#D2691E] font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
               New Appliances
             </Link>
             <Link
-              href="/delivery"
-              className="block py-2 text-gray-700 hover:text-blue-700 font-medium"
+              href="/search?type=PART"
+              className="block py-2 text-gray-700 hover:text-[#D2691E] font-medium"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Schedule Delivery
+              Parts
+            </Link>
+            <hr className="my-2" />
+            <Link
+              href="/delivery"
+              className="block py-2 text-gray-700 hover:text-[#D2691E] font-medium"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Delivery &amp; Services
+            </Link>
+            <Link
+              href="#contact"
+              className="block py-2 text-gray-700 hover:text-[#D2691E] font-medium"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact Us
             </Link>
           </nav>
         </div>

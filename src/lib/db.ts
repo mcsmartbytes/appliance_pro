@@ -69,5 +69,22 @@ export interface DeliverySlot {
   remaining: number;
 }
 
+// Category count for homepage
+export interface CategoryCount {
+  category_id: string;
+  category_name: string;
+  slug: string;
+  used_count: number;
+  new_count: number;
+  total_count: number;
+}
+
+// Homepage stats
+export interface HomeStats {
+  total_used: number;
+  total_new: number;
+  total_parts: number;
+}
+
 // Re-export sql for direct use where needed
 export { sql };

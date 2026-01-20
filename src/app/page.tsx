@@ -1,14 +1,21 @@
 import { sql } from '@vercel/postgres';
 import ItemCard from '@/components/ItemCard';
 import SectionHeader from '@/components/SectionHeader';
-import Link from 'next/link';
-import type { ItemCard as ItemCardType } from '@/lib/db';
+import HeroSection from '@/components/home/HeroSection';
+import CategoryGrid from '@/components/home/CategoryGrid';
+import TrustSection from '@/components/home/TrustSection';
+import ServicesSection from '@/components/home/ServicesSection';
+import ContactSection from '@/components/home/ContactSection';
+import RecentlyAddedStrip from '@/components/home/RecentlyAddedStrip';
+import MobileBar from '@/components/home/MobileBar';
+import type { ItemCard as ItemCardType, CategoryCount, HomeStats } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 async function getHomeData() {
   try {
-    const [usedResult, partsResult, newResult] = await Promise.all([
+    const [usedResult, partsResult, newResult, categoryCountsResult, recentlyAddedResult, statsResult] = await Promise.all([
+      // Used Deals
       sql<ItemCardType>`
         SELECT *
         FROM v_item_cards
@@ -18,6 +25,7 @@ async function getHomeData() {
         ORDER BY created_at DESC
         LIMIT 8
       `,
+      // Parts In Stock
       sql<ItemCardType>`
         SELECT *
         FROM v_item_cards
@@ -28,6 +36,7 @@ async function getHomeData() {
         ORDER BY created_at DESC
         LIMIT 8
       `,
+      // New Appliances
       sql<ItemCardType>`
         SELECT *
         FROM v_item_cards
@@ -37,121 +46,139 @@ async function getHomeData() {
         ORDER BY created_at DESC
         LIMIT 8
       `,
+      // Category counts
+      sql<CategoryCount>`
+        SELECT
+          c.id as category_id,
+          c.name as category_name,
+          c.slug,
+          COALESCE(SUM(CASE WHEN v.item_type = 'USED_UNIT' THEN 1 ELSE 0 END), 0)::int as used_count,
+          COALESCE(SUM(CASE WHEN v.item_type = 'NEW_MODEL' THEN 1 ELSE 0 END), 0)::int as new_count,
+          COUNT(v.id)::int as total_count
+        FROM categories c
+        LEFT JOIN v_item_cards v ON v.category_id = c.id
+          AND v.visibility = 'PUBLIC'
+          AND v.status = 'AVAILABLE'
+        GROUP BY c.id, c.name, c.slug
+        ORDER BY total_count DESC
+      `,
+      // Recently added
+      sql<ItemCardType>`
+        SELECT *
+        FROM v_item_cards
+        WHERE visibility = 'PUBLIC'
+          AND status = 'AVAILABLE'
+        ORDER BY created_at DESC
+        LIMIT 6
+      `,
+      // Stats counts
+      sql<HomeStats>`
+        SELECT
+          COALESCE(SUM(CASE WHEN item_type = 'USED_UNIT' THEN 1 ELSE 0 END), 0)::int as total_used,
+          COALESCE(SUM(CASE WHEN item_type = 'NEW_MODEL' THEN 1 ELSE 0 END), 0)::int as total_new,
+          COALESCE(SUM(CASE WHEN item_type = 'PART' THEN 1 ELSE 0 END), 0)::int as total_parts
+        FROM v_item_cards
+        WHERE visibility = 'PUBLIC'
+          AND status = 'AVAILABLE'
+      `,
     ]);
 
     return {
       used: usedResult.rows,
       parts: partsResult.rows,
       new: newResult.rows,
+      categoryCounts: categoryCountsResult.rows,
+      recentlyAdded: recentlyAddedResult.rows,
+      stats: statsResult.rows[0] || { total_used: 0, total_new: 0, total_parts: 0 },
     };
   } catch (error) {
     console.error('Failed to fetch home data:', error);
-    return { used: [], parts: [], new: [] };
+    return {
+      used: [],
+      parts: [],
+      new: [],
+      categoryCounts: [],
+      recentlyAdded: [],
+      stats: { total_used: 0, total_new: 0, total_parts: 0 },
+    };
   }
 }
 
 export default async function HomePage() {
-  const { used, parts, new: newItems } = await getHomeData();
+  const { used, parts, new: newItems, categoryCounts, recentlyAdded, stats } = await getHomeData();
 
   return (
-    <>
+    <div className="pb-16 md:pb-0">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              Quality Appliances at{' '}
-              <span className="text-blue-400">Affordable Prices</span>
-            </h1>
-            <p className="mt-4 text-lg text-gray-300">
-              Shop our selection of new and refurbished appliances, genuine parts,
-              and schedule professional delivery to your home.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/search?type=USED_UNIT"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
-              >
-                Shop Used Deals
-              </Link>
-              <Link
-                href="/search?type=NEW_MODEL"
-                className="px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold rounded-lg transition-colors"
-              >
-                Browse New
-              </Link>
-            </div>
-          </div>
+      <HeroSection stats={stats} />
+
+      {/* Shop by Category */}
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="Shop by Category"
+            subtitle="Find exactly what you need"
+          />
+          <CategoryGrid categories={categoryCounts} partsCount={stats.total_parts} />
         </div>
       </section>
 
-      {/* Features Bar */}
-      <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div className="flex items-center justify-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="text-left">
-                <p className="font-semibold text-gray-900">Quality Tested</p>
-                <p className="text-sm text-gray-600">All units inspected & tested</p>
-              </div>
+      {/* What's In Stock Today - Used Section */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="What's In Stock Today"
+            subtitle="Cleaned, tested, and ready for your home"
+            viewAllHref="/search?type=USED_UNIT"
+          />
+          {used.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {used.map((item) => (
+                <ItemCard key={item.id} item={item} />
+              ))}
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                </svg>
-              </div>
-              <div className="text-left">
-                <p className="font-semibold text-gray-900">Professional Delivery</p>
-                <p className="text-sm text-gray-600">We bring it to your door</p>
-              </div>
+          ) : (
+            <div className="text-center py-12 text-gray-500">
+              <p>Check back soon for new inventory.</p>
             </div>
-            <div className="flex items-center justify-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <div className="text-left">
-                <p className="font-semibold text-gray-900">Warranty Included</p>
-                <p className="text-sm text-gray-600">30-90 day coverage</p>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
-      {/* Used Deals Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <SectionHeader
-          title="Used Deals"
-          subtitle="Refurbished appliances at great prices"
-          viewAllHref="/search?type=USED_UNIT"
-        />
-        {used.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {used.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-gray-500">
-            <p>No used appliances available at the moment.</p>
-          </div>
-        )}
+      {/* Recently Added Strip */}
+      <RecentlyAddedStrip items={recentlyAdded} />
+
+      {/* Trust Section */}
+      <TrustSection />
+
+      {/* New Appliances Section */}
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            title="New Appliances"
+            subtitle="Factory fresh with full manufacturer warranty"
+            viewAllHref="/search?type=NEW_MODEL"
+          />
+          {newItems.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {newItems.map((item) => (
+                <ItemCard key={item.id} item={item} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-gray-500">
+              <p>Check back soon for new inventory.</p>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Parts Section */}
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             title="Parts In Stock"
-            subtitle="Genuine OEM and aftermarket parts"
+            subtitle="Genuine OEM and quality aftermarket parts"
             viewAllHref="/search?type=PART"
           />
           {parts.length > 0 ? (
@@ -162,57 +189,20 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500">
-              <p>No parts available at the moment.</p>
+              <p>Check back soon for new parts.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* New Appliances Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <SectionHeader
-          title="New Appliances"
-          subtitle="Factory fresh with full warranty"
-          viewAllHref="/search?type=NEW_MODEL"
-        />
-        {newItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {newItems.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-gray-500">
-            <p>No new appliances available at the moment.</p>
-          </div>
-        )}
-      </section>
+      {/* Services Section */}
+      <ServicesSection />
 
-      {/* CTA Section */}
-      <section className="bg-blue-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
-            Need Help Finding the Right Appliance?
-          </h2>
-          <p className="mt-2 text-blue-100">
-            Our experts are ready to help you find exactly what you need.
-          </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <a
-              href="tel:+15551234567"
-              className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              Call (555) 123-4567
-            </a>
-            <Link
-              href="/delivery"
-              className="px-6 py-3 bg-blue-800 text-white font-semibold rounded-lg hover:bg-blue-900 transition-colors"
-            >
-              Schedule Delivery
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+      {/* Contact Section */}
+      <ContactSection />
+
+      {/* Mobile Sticky Bar */}
+      <MobileBar />
+    </div>
   );
 }

@@ -145,6 +145,47 @@ Please contact the customer to confirm the order and arrange payment/delivery.
   }
 }
 
+export async function sendContactInquiry(inquiry: {
+  name: string;
+  phone: string;
+  message: string;
+}) {
+  if (!NOTIFY_EMAIL) {
+    console.warn('NOTIFY_EMAIL not set, skipping email notification');
+    return { success: false, error: 'NOTIFY_EMAIL not configured' };
+  }
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: NOTIFY_EMAIL,
+      subject: `Website Inquiry from ${inquiry.name}`,
+      html: `
+        <h2>New Website Inquiry</h2>
+        <p><strong>Name:</strong> ${inquiry.name}</p>
+        <p><strong>Phone:</strong> <a href="tel:${inquiry.phone}">${inquiry.phone}</a></p>
+        <h3>Message</h3>
+        <p>${inquiry.message.replace(/\n/g, '<br>')}</p>
+        <hr>
+        <p style="color: #6b7280; font-size: 12px;">
+          This inquiry was submitted through the website contact form.
+        </p>
+      `,
+      text: `New Website Inquiry\n\nName: ${inquiry.name}\nPhone: ${inquiry.phone}\n\nMessage:\n${inquiry.message}`,
+    });
+
+    if (error) {
+      console.error('Contact email error:', error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, id: data?.id };
+  } catch (error) {
+    console.error('Contact email error:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+}
+
 export async function sendLowStockAlert(items: { title: string; quantity: number; reorder_point: number }[]) {
   if (!NOTIFY_EMAIL) {
     return { success: false, error: 'NOTIFY_EMAIL not configured' };
