@@ -5,7 +5,7 @@ export default function MobileBar() {
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg md:hidden z-50">
       <div className="flex items-center justify-center gap-3 p-3">
         <a
-          href="tel:+15551234567"
+          href="tel:+16605535055"
           className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#D2691E] hover:bg-[#c45c18] text-white font-semibold rounded-lg transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

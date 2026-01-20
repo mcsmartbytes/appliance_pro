@@ -89,7 +89,7 @@ export default function ContactSection() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D2691E] focus:border-transparent"
-                    placeholder="(555) 123-4567"
+                    placeholder="(660) 553-5055"
                   />
                 </div>
                 <div>
@@ -139,7 +139,7 @@ export default function ContactSection() {
 
               {/* Phone */}
               <a
-                href="tel:+15551234567"
+                href="tel:+16605535055"
                 className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors group"
               >
                 <div className="w-12 h-12 rounded-full bg-[#D2691E] flex items-center justify-center flex-shrink-0">
@@ -149,7 +149,23 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Call or Text</p>
-                  <p className="text-xl font-semibold group-hover:text-[#D2691E] transition-colors">(555) 123-4567</p>
+                  <p className="text-xl font-semibold group-hover:text-[#D2691E] transition-colors">(660) 553-5055</p>
+                </div>
+              </a>
+
+              {/* Email */}
+              <a
+                href="mailto:info@benitzapplianceshop.com"
+                className="flex items-center gap-4 p-4 rounded-lg hover:bg-white/5 transition-colors group"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18a2 2 0 002-2V8a2 2 0 00-2-2H3a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Email</p>
+                  <p className="font-semibold group-hover:text-[#D2691E] transition-colors">info@benitzapplianceshop.com</p>
                 </div>
               </a>
 
@@ -182,8 +198,9 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-400">Store Hours</p>
-                  <p className="font-semibold">Mon-Fri: 9am - 5pm</p>
+                  <p className="font-semibold">Mon-Fri: 9am - 6pm</p>
                   <p className="text-gray-300">Sat: 9am - 3pm</p>
+                  <p className="text-gray-300">Sun: Closed</p>
                 </div>
               </div>
 

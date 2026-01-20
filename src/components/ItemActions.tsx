@@ -13,7 +13,7 @@ export default function ItemActions({ item }: ItemActionsProps) {
     <div className="space-y-3">
       <AddToCartButton item={item} showQuantity className="w-full" />
       <a
-        href="tel:+15551234567"
+        href="tel:+16605535055"
         className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-lg transition-colors"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

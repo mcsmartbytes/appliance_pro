@@ -4,6 +4,8 @@ import SectionHeader from '@/components/SectionHeader';
 import HeroSection from '@/components/home/HeroSection';
 import CategoryGrid from '@/components/home/CategoryGrid';
 import TrustSection from '@/components/home/TrustSection';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
+import ShowroomSection from '@/components/home/ShowroomSection';
 import ServicesSection from '@/components/home/ServicesSection';
 import ContactSection from '@/components/home/ContactSection';
 import RecentlyAddedStrip from '@/components/home/RecentlyAddedStrip';
@@ -131,6 +133,9 @@ export default async function HomePage() {
             subtitle="Cleaned, tested, and ready for your home"
             viewAllHref="/search?type=USED_UNIT"
           />
+          <p className="text-sm text-gray-500 mb-6">
+            Updated automatically as inventory changes.
+          </p>
           {used.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {used.map((item) => (
@@ -150,6 +155,9 @@ export default async function HomePage() {
 
       {/* Trust Section */}
       <TrustSection />
+
+      {/* Showroom Section */}
+      <ShowroomSection />
 
       {/* New Appliances Section */}
       <section className="bg-white py-12">
@@ -194,6 +202,9 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
 
       {/* Services Section */}
       <ServicesSection />

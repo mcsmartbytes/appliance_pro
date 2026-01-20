@@ -47,10 +47,10 @@ function ConfirmationContent() {
           Continue Shopping
         </Link>
         <a
-          href="tel:+15551234567"
+          href="tel:+16605535055"
           className="block w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors"
         >
-          Call Us: (555) 123-4567
+          Call Us: (660) 553-5055
         </a>
       </div>
     </div>

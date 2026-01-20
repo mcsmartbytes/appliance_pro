@@ -202,7 +202,7 @@ export default function CartDrawer() {
               Proceed to Checkout
             </Link>
             <a
-              href="tel:+15551234567"
+              href="tel:+16605535055"
               className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
